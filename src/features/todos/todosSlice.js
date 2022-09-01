@@ -17,6 +17,27 @@ export const fetchAsyncListOfTodos = createAsyncThunk(
   }
 )
 
+export const deleteAsyncSingleTodo = createAsyncThunk(
+  'todos/deleteAsyncSingleTodo',
+  async (data) => {
+    const { todoId, id } = data
+    await todosApi.delete(`todo/${todoId}/itemInTodo/${id}`)
+  }
+)
+
+export const updateAsyncSingleTodo = createAsyncThunk(
+  'todos/deleteAsyncSingleTodo',
+  async (data) => {
+    const { todoId, id, newStatus } = data
+
+    const response = await todosApi.put(`todo/${todoId}/itemInTodo/${id}`, {
+      status: newStatus,
+    })
+
+    return response.data
+  }
+)
+
 const initialState = {
   todos: [],
   listOfTodos: [],

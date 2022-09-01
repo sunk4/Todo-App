@@ -1,7 +1,11 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { useSelector } from 'react-redux'
-import { selectListOfTodos } from './todosSlice'
+import {
+  selectListOfTodos,
+  deleteAsyncSingleTodo,
+  updateAsyncSingleTodo,
+} from './todosSlice'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import ModalCreateTask from './ModalCreateTask'
@@ -9,9 +13,16 @@ import { useState } from 'react'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
 import Input from '@mui/material/Input'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+
 const SingleList = () => {
   const listOfTodos = useSelector(selectListOfTodos)
+
+  const dispatch = useDispatch()
+
   const [open, setOpen] = useState(false)
+
   const handleOpen = () => {
     setOpen(true)
   }
@@ -19,21 +30,30 @@ const SingleList = () => {
     setOpen(false)
   }
 
-  const { name, id, Todo: todos } = listOfTodos
+  const { name, Todo: todos } = listOfTodos
 
   let renderListOfTodos = null
 
   renderListOfTodos = todos?.map((todo) => {
-    const { id, title, deadline } = todo
+    const { deadline, title, todoId, id, status } = todo
+    const newStatus = !status
+    console.log(status)
+
     return (
-      <Box key={id}>
-        <Button>
+      <Box key={todoId}>
+        <Button
+          onClick={() =>
+            dispatch(updateAsyncSingleTodo({ todoId, id, newStatus }))
+          }
+        >
           <CircleOutlinedIcon />
         </Button>
-        <Typography variant="subtitle1">
-          {title} {deadline}
-        </Typography>
-        <Button>
+        <Link to={id}>
+          <Typography variant="subtitle1">
+            {title} {deadline}
+          </Typography>
+        </Link>
+        <Button onClick={() => dispatch(deleteAsyncSingleTodo({ todoId, id }))}>
           <DeleteOutlineIcon />
         </Button>
       </Box>
@@ -41,12 +61,11 @@ const SingleList = () => {
   })
 
   return (
-    // {listOfTodos === 0 ? <div>wait</div> :}
     <>
       <Container maxWidth="sm">
-        <Box key={id} sx={{ bgcolor: '#cfe8fc', height: '80vh' }}>
+        <Box sx={{ bgcolor: '#cfe8fc', height: '80vh' }}>
           <Typography variant="h6">{name} </Typography>
-          <Typography variant="h6">{todos?.length} task remaining </Typography>
+          <Typography variant="h6">{todos?.length} task remaining</Typography>
           <Input />
           {renderListOfTodos}
           <Button onClick={handleOpen}>Create List</Button>
