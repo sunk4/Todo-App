@@ -10,11 +10,15 @@ import { Button } from '@mui/material'
 import { useState } from 'react'
 import ModalCreateList from './ModalCreateList'
 import Typography from '@mui/material/Typography'
+import { useDispatch } from 'react-redux'
+import { fetchAsyncListOfTodos } from './todosSlice'
 
 const Sidebar = () => {
+  const dispatch = useDispatch()
+
   const todosList = useSelector(selectAllTodos)
 
-  let renderListOfTodos = ''
+  let renderListOfTodos = null
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
@@ -28,7 +32,7 @@ const Sidebar = () => {
     const { name, id } = todo
     return (
       <ListItem key={id} disablePadding>
-        <ListItemButton>
+        <ListItemButton onClick={() => dispatch(fetchAsyncListOfTodos(id))}>
           <ListItemIcon>
             <WorkOutlineOutlinedIcon />
           </ListItemIcon>

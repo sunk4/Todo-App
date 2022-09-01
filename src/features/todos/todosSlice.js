@@ -9,8 +9,17 @@ export const fetchAsyncToDos = createAsyncThunk(
   }
 )
 
+export const fetchAsyncListOfTodos = createAsyncThunk(
+  'todos/fetchAsyncListOfTodos',
+  async (id) => {
+    const response = await todosApi.get(`/todo/${id}`)
+    return response.data
+  }
+)
+
 const initialState = {
   todos: [],
+  listOfTodos: {},
   isLoading: false,
   error: null,
 }
@@ -32,9 +41,21 @@ export const todosSlice = createSlice({
         state.isLoading = false
         state.error = action.error.message
       })
+      .addCase(fetchAsyncListOfTodos.pending, (state, action) => {
+        state.isLoading = true
+      })
+      .addCase(fetchAsyncListOfTodos.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.listOfTodos = action.payload
+      })
+      .addCase(fetchAsyncListOfTodos.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.error.message
+      })
   },
 })
 
 export const selectAllTodos = (state) => state.todos.todos
+export const selectListOfTodos = (state) => state.todos.listOfTodos
 
 export default todosSlice.reducer
