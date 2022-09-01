@@ -39,9 +39,19 @@ export const updateAsyncSingleTodo = createAsyncThunk(
   }
 )
 
+export const fetchAsyncSingleTodo = createAsyncThunk(
+  'todos/fetchAsyncSingleTodo',
+  async (data) => {
+    const { todoId, id } = data
+    const response = await todosApi.get(`/todo/${todoId}/itemInTodo/${id}`)
+    return response.data
+  }
+)
+
 const initialState = {
   todos: [],
   listOfTodos: [],
+  selectedSingleTodo: [],
   isLoading: false,
   error: null,
 }
@@ -78,8 +88,6 @@ export const todosSlice = createSlice({
         const { id } = action.payload
         console.log(id)
         const newTodos = state.listOfTodos.todo.filter((todo) => todo.id !== id)
-        // const newTodos = Object.entries(state.listOfTodos)
-
         state.listOfTodos = newTodos
         state.isLoading = false
       })
@@ -91,10 +99,16 @@ export const todosSlice = createSlice({
         state.listOfTodos = [...todos, action.payload]
         state.isLoading = false
       })
+      .addCase(fetchAsyncSingleTodo.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.selectedSingleTodo = action.payload
+      })
   },
 })
 
 export const selectAllTodos = (state) => state.todos.todos
 export const selectListOfTodos = (state) => state.todos.listOfTodos
+export const selectSelectedSingleTodo = (state) =>
+  state.todos.selectedSingleTodo
 
 export default todosSlice.reducer

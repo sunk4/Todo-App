@@ -5,6 +5,7 @@ import {
   selectListOfTodos,
   deleteAsyncSingleTodo,
   updateAsyncSingleTodo,
+  fetchAsyncSingleTodo,
 } from './todosSlice'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -45,7 +46,7 @@ const SingleList = () => {
         >
           <CircleOutlinedIcon />
         </Button>
-        <Link to={id}>
+        <Link to={`/${todoId}/${id}`}>
           <Typography variant="subtitle1">
             {title} {deadline}
           </Typography>
