@@ -5,6 +5,8 @@ import {
   fetchAsyncSingleTodo,
 } from '../features/todos/todosSlice'
 import { useParams } from 'react-router-dom'
+import React from 'react'
+import Moment from 'react-moment'
 
 const SingleItemInTodo = () => {
   const dispatch = useDispatch()
@@ -16,9 +18,15 @@ const SingleItemInTodo = () => {
     dispatch(fetchAsyncSingleTodo({ todoId, id }))
   }, [dispatch, todoId, id])
 
-  console.log(selectedTodo)
-
-  return <div>SingleItemInTodo</div>
+  const { deadline, status, text, title } = selectedTodo
+  const date = new Date()
+  return (
+    <div>
+      <div>
+        <Moment fromNow>{deadline}</Moment>
+      </div>
+    </div>
+  )
 }
 
 export default SingleItemInTodo

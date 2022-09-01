@@ -35,13 +35,12 @@ const SingleList = () => {
 
   renderListOfTodos = todos?.map((todo) => {
     const { deadline, title, todoId, id, status } = todo
-    let newStatus = !status
 
     return (
       <Box key={id}>
         <Button
           onClick={() =>
-            dispatch(updateAsyncSingleTodo({ todoId, id, newStatus }))
+            dispatch(updateAsyncSingleTodo({ todoId, id, status }))
           }
         >
           <CircleOutlinedIcon />
