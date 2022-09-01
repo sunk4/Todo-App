@@ -37,10 +37,9 @@ const SingleList = () => {
   renderListOfTodos = todos?.map((todo) => {
     const { deadline, title, todoId, id, status } = todo
     const newStatus = !status
-    console.log(status)
 
     return (
-      <Box key={todoId}>
+      <Box key={id}>
         <Button
           onClick={() =>
             dispatch(updateAsyncSingleTodo({ todoId, id, newStatus }))

@@ -21,7 +21,8 @@ export const deleteAsyncSingleTodo = createAsyncThunk(
   'todos/deleteAsyncSingleTodo',
   async (data) => {
     const { todoId, id } = data
-    await todosApi.delete(`todo/${todoId}/itemInTodo/${id}`)
+    const response = await todosApi.delete(`todo/${todoId}/itemInTodo/${id}`)
+    return response.data
   }
 )
 
@@ -72,6 +73,12 @@ export const todosSlice = createSlice({
       .addCase(fetchAsyncListOfTodos.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.error.message
+      })
+      .addCase(deleteAsyncSingleTodo.fulfilled, (state, action) => {
+        state.isLoading = false
+        const { id } = action.payload
+        const todos = state.listOfTodos.Todo.filter((todo) => todo.id !== id)
+        state.listOfTodos = todos
       })
   },
 })
