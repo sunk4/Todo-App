@@ -19,7 +19,7 @@ export const fetchAsyncListOfTodos = createAsyncThunk(
 
 const initialState = {
   todos: [],
-  listOfTodos: {},
+  listOfTodos: [],
   isLoading: false,
   error: null,
 }

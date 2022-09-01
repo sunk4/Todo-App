@@ -23,7 +23,7 @@ const SingleList = () => {
 
   let renderListOfTodos = null
 
-  renderListOfTodos = todos.map((todo) => {
+  renderListOfTodos = todos?.map((todo) => {
     const { id, title, deadline } = todo
     return (
       <Box key={id}>
@@ -41,11 +41,12 @@ const SingleList = () => {
   })
 
   return (
+    // {listOfTodos === 0 ? <div>wait</div> :}
     <>
       <Container maxWidth="sm">
         <Box key={id} sx={{ bgcolor: '#cfe8fc', height: '80vh' }}>
           <Typography variant="h6">{name} </Typography>
-          <Typography variant="h6">{todos.length} task remaining </Typography>
+          <Typography variant="h6">{todos?.length} task remaining </Typography>
           <Input />
           {renderListOfTodos}
           <Button onClick={handleOpen}>Create List</Button>

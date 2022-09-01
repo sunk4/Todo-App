@@ -7,7 +7,7 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined'
 import { selectAllTodos } from './todosSlice'
 import { useSelector } from 'react-redux'
 import { Button } from '@mui/material'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ModalCreateList from './ModalCreateList'
 import Typography from '@mui/material/Typography'
 import { useDispatch } from 'react-redux'
@@ -28,7 +28,7 @@ const Sidebar = () => {
     setOpen(false)
   }
 
-  renderListOfTodos = todosList.map((todo) => {
+  renderListOfTodos = todosList?.map((todo) => {
     const { name, id } = todo
     return (
       <ListItem key={id} disablePadding>
