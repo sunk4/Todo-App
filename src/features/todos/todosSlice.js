@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit'
 import todosApi from '../../common/todosApi'
 
 export const fetchAsyncToDos = createAsyncThunk(
@@ -27,7 +27,7 @@ export const deleteAsyncSingleTodo = createAsyncThunk(
 )
 
 export const updateAsyncSingleTodo = createAsyncThunk(
-  'todos/deleteAsyncSingleTodo',
+  'todos/updateAsyncSingleTodo',
   async (data) => {
     const { todoId, id, newStatus } = data
 
@@ -75,10 +75,21 @@ export const todosSlice = createSlice({
         state.error = action.error.message
       })
       .addCase(deleteAsyncSingleTodo.fulfilled, (state, action) => {
-        state.isLoading = false
         const { id } = action.payload
-        const todos = state.listOfTodos.Todo.filter((todo) => todo.id !== id)
-        state.listOfTodos = todos
+        console.log(id)
+        const newTodos = state.listOfTodos.todo.filter((todo) => todo.id !== id)
+        // const newTodos = Object.entries(state.listOfTodos)
+
+        state.listOfTodos = newTodos
+        state.isLoading = false
+      })
+      .addCase(updateAsyncSingleTodo.fulfilled, (state, action) => {
+        const { id } = action.payload
+        console.log(state.listOfTodos)
+        console.log(typeof state.listOfTodos)
+        const todos = state.listOfTodos.filter((todo) => todo.id !== id)
+        state.listOfTodos = [...todos, action.payload]
+        state.isLoading = false
       })
   },
 })

@@ -18,9 +18,7 @@ import { Link } from 'react-router-dom'
 
 const SingleList = () => {
   const listOfTodos = useSelector(selectListOfTodos)
-
   const dispatch = useDispatch()
-
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
@@ -30,13 +28,13 @@ const SingleList = () => {
     setOpen(false)
   }
 
-  const { name, Todo: todos } = listOfTodos
+  const { name, todo: todos } = listOfTodos
 
   let renderListOfTodos = null
 
   renderListOfTodos = todos?.map((todo) => {
     const { deadline, title, todoId, id, status } = todo
-    const newStatus = !status
+    let newStatus = !status
 
     return (
       <Box key={id}>
