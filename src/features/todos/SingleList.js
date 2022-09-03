@@ -5,7 +5,8 @@ import {
   selectListOfTodos,
   deleteAsyncSingleTodo,
   updateAsyncSingleTodo,
-  fetchAsyncSingleTodo,
+  filterByStatusSingleTodo,
+  selectFilteredTodos,
 } from './todosSlice'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -19,6 +20,8 @@ import { Link } from 'react-router-dom'
 
 const SingleList = () => {
   const listOfTodos = useSelector(selectListOfTodos)
+  const filteredTodos = useSelector(selectFilteredTodos)
+
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
 
@@ -29,11 +32,12 @@ const SingleList = () => {
     setOpen(false)
   }
 
-  const { name, todo: todos } = listOfTodos
+  const { id, name, todo: todos } = listOfTodos
 
   let renderListOfTodos = null
 
-  renderListOfTodos = todos?.map((todo) => {
+  renderListOfTodos = filteredTodos.items?.map((todo) => {
+    console.log(todo)
     const { deadline, title, todoId, id, status } = todo
 
     return (
@@ -46,9 +50,7 @@ const SingleList = () => {
           <CircleOutlinedIcon />
         </Button>
         <Link to={`/${todoId}/${id}`}>
-          <Typography variant="subtitle1">
-            {title} {deadline}
-          </Typography>
+          <Typography variant="subtitle1">{title}</Typography>
         </Link>
         <Button onClick={() => dispatch(deleteAsyncSingleTodo({ todoId, id }))}>
           <DeleteOutlineIcon />
@@ -67,6 +69,23 @@ const SingleList = () => {
           {renderListOfTodos}
           <Button onClick={handleOpen}>Create List</Button>
           <ModalCreateTask open={open} handleClose={handleClose} />
+          <Button onClick={() => dispatch(filterByStatusSingleTodo({ id }))}>
+            All
+          </Button>
+          <Button
+            onClick={() =>
+              dispatch(filterByStatusSingleTodo({ id, status: true }))
+            }
+          >
+            Active
+          </Button>
+          <Button
+            onClick={() =>
+              dispatch(filterByStatusSingleTodo({ id, status: false }))
+            }
+          >
+            Done
+          </Button>
         </Box>
       </Container>
     </>
