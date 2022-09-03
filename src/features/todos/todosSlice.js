@@ -21,7 +21,7 @@ export const deleteAsyncSingleTodo = createAsyncThunk(
   'todos/deleteAsyncSingleTodo',
   async (data) => {
     const { todoId, id } = data
-    const response = await todosApi.delete(`todo/${todoId}/itemInTodo/${id}`)
+    const response = await todosApi.delete(`/todo/${todoId}/itemInTodo/${id}`)
     return response.data
   }
 )
@@ -32,7 +32,7 @@ export const updateAsyncSingleTodo = createAsyncThunk(
     const { todoId, id, status } = data
     let newStatus = !status
 
-    const response = await todosApi.put(`todo/${todoId}/itemInTodo/${id}`, {
+    const response = await todosApi.put(`/todo/${todoId}/itemInTodo/${id}`, {
       status: newStatus,
     })
 
@@ -55,11 +55,11 @@ export const filterByStatusSingleTodo = createAsyncThunk(
     const { id, status } = data
 
     if (status === undefined) {
-      const response = await todosApi.get(`todo/${id}/itemInTodo?status=`)
+      const response = await todosApi.get(`/todo/${id}/itemInTodo?status=`)
       return response.data
     } else {
       const response = await todosApi.get(
-        `todo/${id}/itemInTodo?status=${status}`
+        `/todo/${id}/itemInTodo?status=${status}`
       )
       return response.data
     }
@@ -70,6 +70,14 @@ export const deleteAsyncListTodo = createAsyncThunk(
   'todos/deleteAsyncListTodo',
   async (id) => {
     const response = await todosApi.delete(`/todo/${id}`)
+    return response.data
+  }
+)
+
+export const searchInTodosAsync = createAsyncThunk(
+  'todos/searchInTodosAsync',
+  async (text) => {
+    const response = await todosApi.get(`/todo/1/itemInTodo?search=${text}`)
     return response.data
   }
 )
@@ -146,6 +154,10 @@ export const todosSlice = createSlice({
         state.isLoading = false
         const newTodos = state.todos.filter((todo) => todo.id !== id)
         state.todos = newTodos
+      })
+      .addCase(searchInTodosAsync.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.filteredTodos = action.payload
       })
   },
 })

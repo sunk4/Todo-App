@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { useSelector } from 'react-redux'
+import { TextField } from '@mui/material'
 import {
   selectListOfTodos,
   deleteAsyncSingleTodo,
@@ -8,6 +9,7 @@ import {
   filterByStatusSingleTodo,
   selectFilteredTodos,
   deleteAsyncListTodo,
+  searchInTodosAsync,
 } from './todosSlice'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -22,6 +24,17 @@ import { Link } from 'react-router-dom'
 const SingleList = () => {
   const listOfTodos = useSelector(selectListOfTodos)
   const filteredTodos = useSelector(selectFilteredTodos)
+
+  const [searchValue, setSearchValue] = useState('')
+
+  const handleSearchInput = (e) => {
+    setSearchValue(e.target.value)
+    if (!searchValue) {
+      dispatch(filterByStatusSingleTodo({ id: 1 }))
+    } else {
+      dispatch(searchInTodosAsync(searchValue))
+    }
+  }
 
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
@@ -68,7 +81,14 @@ const SingleList = () => {
           <Button onClick={() => dispatch(deleteAsyncListTodo(id))}>
             Delete {name}
           </Button>
-          <Input />
+          <TextField
+            id="standard-search"
+            label="Search in Todos"
+            type="search"
+            variant="standard"
+            name="search"
+            onChange={(e) => handleSearchInput(e)}
+          />
           {renderListOfTodos}
           <Button onClick={handleOpen}>Create List</Button>
           <ModalCreateTask open={open} handleClose={handleClose} />
