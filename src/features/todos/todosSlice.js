@@ -93,6 +93,20 @@ export const createAsyncTodoList = createAsyncThunk(
   }
 )
 
+export const createAsyncTodoInTodoList = createAsyncThunk(
+  'todos/createAsyncTodoInTodoList',
+  async (data) => {
+    const { id, title, description, deadline } = data
+    const response = await todosApi.post(`/todo/${id}/itemInTodo`, {
+      title,
+      description,
+      deadline,
+      status: false,
+    })
+    return response.data
+  }
+)
+
 const initialState = {
   todos: [],
   listOfTodos: [],
@@ -175,6 +189,15 @@ export const todosSlice = createSlice({
       .addCase(createAsyncTodoList.fulfilled, (state, action) => {
         state.isLoading = false
         state.todos = [...state.todos, action.payload]
+      })
+      .addCase(createAsyncTodoInTodoList.fulfilled, (state, action) => {
+        state.isLoading = false
+        // state.filteredTodos = [...state.filteredTodos.items, action.payload]
+
+        state.filteredTodos = {
+          count: state.filteredTodos.count + 1,
+          items: [...state.filteredTodos.items, action.payload],
+        }
       })
   },
 })

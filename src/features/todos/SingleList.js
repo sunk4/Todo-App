@@ -50,7 +50,6 @@ const SingleList = () => {
   const { id, name } = listOfTodos
 
   const { count } = filteredTodos
-  console.log(count)
 
   let renderListOfTodos = null
 
@@ -97,7 +96,7 @@ const SingleList = () => {
           />
           {renderListOfTodos}
           <Button onClick={handleOpen}>Create List</Button>
-          <ModalCreateTask open={open} handleClose={handleClose} />
+          <ModalCreateTask open={open} handleClose={handleClose} id={id} />
           <Button onClick={() => dispatch(filterByStatusSingleTodo({ id }))}>
             All
           </Button>
