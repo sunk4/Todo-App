@@ -82,6 +82,17 @@ export const searchInTodosAsync = createAsyncThunk(
   }
 )
 
+export const createAsyncTodoList = createAsyncThunk(
+  'todos/createAsyncTodoList',
+  async (data) => {
+    const { name } = data
+    const response = await todosApi.post(`/todo`, {
+      name,
+    })
+    return response.data
+  }
+)
+
 const initialState = {
   todos: [],
   listOfTodos: [],
@@ -122,22 +133,24 @@ export const todosSlice = createSlice({
       .addCase(deleteAsyncSingleTodo.fulfilled, (state, action) => {
         const { id } = action.payload
 
-        const newTodos = state.listOfTodos.todo.filter((todo) => todo.id !== id)
-        state.listOfTodos = {
-          id: state.listOfTodos.id,
-          name: state.listOfTodos.name,
-          todo: [...newTodos],
+        const newTodos = state.filteredTodos.items.filter((todo) => {
+          return todo.id !== id
+        })
+        state.filteredTodos = {
+          count: state.filteredTodos.count - 1,
+          items: newTodos,
         }
 
         state.isLoading = false
       })
       .addCase(updateAsyncSingleTodo.fulfilled, (state, action) => {
         const { id } = action.payload
-        const newTodos = state.listOfTodos.todo.filter((todo) => todo.id !== id)
-        state.listOfTodos = {
-          id: state.listOfTodos.id,
-          name: state.listOfTodos.name,
-          todo: [...newTodos, action.payload],
+        const newTodos = state.filteredTodos.items.filter(
+          (todo) => todo.id !== id
+        )
+        state.filteredTodos = {
+          count: state.filteredTodos.count,
+          items: [...newTodos, action.payload],
         }
         state.isLoading = false
       })
@@ -158,6 +171,10 @@ export const todosSlice = createSlice({
       .addCase(searchInTodosAsync.fulfilled, (state, action) => {
         state.isLoading = false
         state.filteredTodos = action.payload
+      })
+      .addCase(createAsyncTodoList.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.todos = [...state.todos, action.payload]
       })
   },
 })

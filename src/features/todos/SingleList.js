@@ -25,14 +25,15 @@ const SingleList = () => {
   const listOfTodos = useSelector(selectListOfTodos)
   const filteredTodos = useSelector(selectFilteredTodos)
 
-  const [searchValue, setSearchValue] = useState('')
+  const [searchInputValue, setSearchInputValue] = useState('')
 
   const handleSearchInput = (e) => {
-    setSearchValue(e.target.value)
-    if (!searchValue) {
+    setSearchInputValue(e.target.value)
+
+    if (!searchInputValue) {
       dispatch(filterByStatusSingleTodo({ id: 1 }))
     } else {
-      dispatch(searchInTodosAsync(searchValue))
+      dispatch(searchInTodosAsync(searchInputValue))
     }
   }
 
@@ -46,7 +47,10 @@ const SingleList = () => {
     setOpen(false)
   }
 
-  const { id, name, todo: todos } = listOfTodos
+  const { id, name } = listOfTodos
+
+  const { count } = filteredTodos
+  console.log(count)
 
   let renderListOfTodos = null
 
@@ -63,7 +67,9 @@ const SingleList = () => {
           <CircleOutlinedIcon />
         </Button>
         <Link to={`/${todoId}/${id}`}>
-          <Typography variant="subtitle1">{title}</Typography>
+          <Typography className="" variant="subtitle1">
+            {title}
+          </Typography>
         </Link>
         <Button onClick={() => dispatch(deleteAsyncSingleTodo({ todoId, id }))}>
           <DeleteOutlineIcon />
@@ -77,7 +83,7 @@ const SingleList = () => {
       <Container maxWidth="sm">
         <Box sx={{ bgcolor: '#cfe8fc', height: '80vh' }}>
           <Typography variant="h6">{name} </Typography>
-          <Typography variant="h6">{todos?.length} task remaining</Typography>
+          <Typography variant="h6">{count} task remaining</Typography>
           <Button onClick={() => dispatch(deleteAsyncListTodo(id))}>
             Delete {name}
           </Button>
@@ -86,7 +92,7 @@ const SingleList = () => {
             label="Search in Todos"
             type="search"
             variant="standard"
-            name="search"
+            name={name}
             onChange={(e) => handleSearchInput(e)}
           />
           {renderListOfTodos}

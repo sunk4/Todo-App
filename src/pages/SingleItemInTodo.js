@@ -4,7 +4,7 @@ import {
   selectSelectedSingleTodo,
   fetchAsyncSingleTodo,
 } from '../features/todos/todosSlice'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import React from 'react'
 import Moment from 'react-moment'
 
@@ -19,9 +19,10 @@ const SingleItemInTodo = () => {
   }, [dispatch, todoId, id])
 
   const { deadline, status, text, title } = selectedTodo
-  const date = new Date()
+
   return (
     <div>
+      <Link to="/">Back</Link>
       <div>
         <Moment fromNow>{deadline}</Moment>
       </div>
