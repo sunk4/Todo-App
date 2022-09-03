@@ -7,6 +7,7 @@ import {
   updateAsyncSingleTodo,
   filterByStatusSingleTodo,
   selectFilteredTodos,
+  deleteAsyncListTodo,
 } from './todosSlice'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -37,8 +38,7 @@ const SingleList = () => {
   let renderListOfTodos = null
 
   renderListOfTodos = filteredTodos.items?.map((todo) => {
-    console.log(todo)
-    const { deadline, title, todoId, id, status } = todo
+    const { title, todoId, id, status } = todo
 
     return (
       <Box key={id}>
@@ -65,6 +65,9 @@ const SingleList = () => {
         <Box sx={{ bgcolor: '#cfe8fc', height: '80vh' }}>
           <Typography variant="h6">{name} </Typography>
           <Typography variant="h6">{todos?.length} task remaining</Typography>
+          <Button onClick={() => dispatch(deleteAsyncListTodo(id))}>
+            Delete {name}
+          </Button>
           <Input />
           {renderListOfTodos}
           <Button onClick={handleOpen}>Create List</Button>

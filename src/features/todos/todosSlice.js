@@ -55,16 +55,22 @@ export const filterByStatusSingleTodo = createAsyncThunk(
     const { id, status } = data
 
     if (status === undefined) {
-      console.log('if')
       const response = await todosApi.get(`todo/${id}/itemInTodo?status=`)
       return response.data
     } else {
-      console.log('else')
       const response = await todosApi.get(
         `todo/${id}/itemInTodo?status=${status}`
       )
       return response.data
     }
+  }
+)
+
+export const deleteAsyncListTodo = createAsyncThunk(
+  'todos/deleteAsyncListTodo',
+  async (id) => {
+    const response = await todosApi.delete(`/todo/${id}`)
+    return response.data
   }
 )
 
@@ -107,7 +113,6 @@ export const todosSlice = createSlice({
       })
       .addCase(deleteAsyncSingleTodo.fulfilled, (state, action) => {
         const { id } = action.payload
-        console.log(current(state.listOfTodos))
 
         const newTodos = state.listOfTodos.todo.filter((todo) => todo.id !== id)
         state.listOfTodos = {
@@ -120,9 +125,7 @@ export const todosSlice = createSlice({
       })
       .addCase(updateAsyncSingleTodo.fulfilled, (state, action) => {
         const { id } = action.payload
-        console.log(action.payload)
         const newTodos = state.listOfTodos.todo.filter((todo) => todo.id !== id)
-
         state.listOfTodos = {
           id: state.listOfTodos.id,
           name: state.listOfTodos.name,
@@ -137,6 +140,12 @@ export const todosSlice = createSlice({
       .addCase(filterByStatusSingleTodo.fulfilled, (state, action) => {
         state.isLoading = false
         state.filteredTodos = action.payload
+      })
+      .addCase(deleteAsyncListTodo.fulfilled, (state, action) => {
+        const { id } = action.payload
+        state.isLoading = false
+        const newTodos = state.todos.filter((todo) => todo.id !== id)
+        state.todos = newTodos
       })
   },
 })
