@@ -1,7 +1,5 @@
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 import { useSelector } from 'react-redux'
-import { TextField } from '@mui/material'
+import { TextField, Container, Box, Typography, Button } from '@mui/material'
 import {
   selectListOfTodos,
   deleteAsyncSingleTodo,
@@ -10,14 +8,10 @@ import {
   selectFilteredTodos,
   deleteAsyncListTodo,
   searchInTodosAsync,
-} from './todosSlice'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import ModalCreateTask from './ModalCreateTask'
+} from '../todosSlice'
+import ModalCreateTask from '../ModalCreateTask/ModalCreateTask'
 import { useState } from 'react'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
-import Input from '@mui/material/Input'
+import { DeleteOutline, CircleOutlined } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -63,7 +57,7 @@ const SingleList = () => {
             dispatch(updateAsyncSingleTodo({ todoId, id, status }))
           }
         >
-          <CircleOutlinedIcon />
+          <CircleOutlined />
         </Button>
         <Link to={`/${todoId}/${id}`}>
           <Typography className="" variant="subtitle1">
@@ -71,7 +65,7 @@ const SingleList = () => {
           </Typography>
         </Link>
         <Button onClick={() => dispatch(deleteAsyncSingleTodo({ todoId, id }))}>
-          <DeleteOutlineIcon />
+          <DeleteOutline />
         </Button>
       </Box>
     )

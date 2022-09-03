@@ -1,10 +1,7 @@
-import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
-import Button from '@mui/material/Button'
 import { useFormik } from 'formik'
-import { Input } from '@mui/material'
+import { Input, Button, Modal, Box } from '@mui/material'
 import * as Yup from 'yup'
-import { createAsyncTodoInTodoList } from './todosSlice'
+import { createAsyncTodoInTodoList } from '../todosSlice'
 import { useDispatch } from 'react-redux'
 
 const style = {

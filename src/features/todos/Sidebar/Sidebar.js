@@ -1,17 +1,19 @@
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined'
-import { selectAllTodos } from './todosSlice'
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Button,
+  Typography,
+} from '@mui/material'
+import { WorkOutlineOutlined } from '@mui/icons-material'
+import { selectAllTodos } from '../todosSlice'
 import { useSelector } from 'react-redux'
-import { Button } from '@mui/material'
 import { useState } from 'react'
-import ModalCreateList from './ModalCreateList'
-import Typography from '@mui/material/Typography'
+import ModalCreateList from '../ModalCreateList/ModalCreateList'
 import { useDispatch } from 'react-redux'
-import { fetchAsyncListOfTodos, filterByStatusSingleTodo } from './todosSlice'
+import { fetchAsyncListOfTodos, filterByStatusSingleTodo } from '../todosSlice'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
@@ -40,7 +42,7 @@ const Sidebar = () => {
           }}
         >
           <ListItemIcon>
-            <WorkOutlineOutlinedIcon />
+            <WorkOutlineOutlined />
           </ListItemIcon>
           <ListItemText primary={name} />
         </ListItemButton>

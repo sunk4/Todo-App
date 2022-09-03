@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import todosApi from '../../common/todosApi'
 
 export const fetchAsyncToDos = createAsyncThunk(
@@ -192,7 +192,6 @@ export const todosSlice = createSlice({
       })
       .addCase(createAsyncTodoInTodoList.fulfilled, (state, action) => {
         state.isLoading = false
-        // state.filteredTodos = [...state.filteredTodos.items, action.payload]
 
         state.filteredTodos = {
           count: state.filteredTodos.count + 1,
