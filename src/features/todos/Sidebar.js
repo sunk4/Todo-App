@@ -6,7 +6,6 @@ import {
   ListItemText,
   Button,
   Typography,
-  Box,
 } from '@mui/material'
 import { WorkOutlineOutlined } from '@mui/icons-material'
 import { selectAllTodos } from './todosSlice'
@@ -18,24 +17,24 @@ import { fetchAsyncListOfTodos, filterByStatusSingleTodo } from './todosSlice'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
-
   const todosList = useSelector(selectAllTodos)
 
+  const [open, setOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState('')
+
   const handleListItemClick = (id) => {
     setSelectedIndex(id)
   }
 
-  let renderListOfTodos = null
-
-  const [open, setOpen] = useState(false)
-
   const handleOpen = () => {
     setOpen(true)
   }
+
   const handleClose = () => {
     setOpen(false)
   }
+
+  let renderListOfTodos = ''
 
   renderListOfTodos = todosList?.map((todo) => {
     const { name, id } = todo

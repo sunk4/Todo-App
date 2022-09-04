@@ -1,14 +1,14 @@
-import Grid from '@mui/material/Unstable_Grid2'
+import { Grid } from '@mui/material'
 import Sidebar from '../features/todos/Sidebar'
 import SingleList from '../features/todos/SingleList'
 
 const Home = () => {
   return (
-    <Grid container spacing={2} columns={16}>
-      <Grid paddingLeft={3} xs={4}>
+    <Grid padding={4} container spacing={2} mt={2}>
+      <Grid item xs={3}>
         <Sidebar />
       </Grid>
-      <Grid xs={8}>
+      <Grid item xs={5}>
         <SingleList />
       </Grid>
     </Grid>

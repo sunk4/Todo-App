@@ -14,12 +14,11 @@ const SingleItemInTodo = () => {
   const { todoId, id } = useParams()
 
   const selectedTodo = useSelector(selectSelectedSingleTodo)
+  const { deadline, description, title } = selectedTodo
 
   useEffect(() => {
     dispatch(fetchAsyncSingleTodo({ todoId, id }))
   }, [dispatch, todoId, id])
-
-  const { deadline, description, title } = selectedTodo
 
   return (
     <Box sx={{ width: '100%', mt: 6, maxHeight: '60%' }}>

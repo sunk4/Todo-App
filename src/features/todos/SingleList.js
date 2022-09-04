@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { TextField, Container, Box, Typography, Button } from '@mui/material'
+import { TextField, Typography, Button, Grid, styled } from '@mui/material'
 import {
   selectListOfTodos,
   deleteAsyncSingleTodo,
@@ -19,7 +19,21 @@ const SingleList = () => {
   const listOfTodos = useSelector(selectListOfTodos)
   const filteredTodos = useSelector(selectFilteredTodos)
 
+  const { id, name } = listOfTodos
+  const { count } = filteredTodos
+
+  const dispatch = useDispatch()
+
   const [searchInputValue, setSearchInputValue] = useState('')
+  const [open, setOpen] = useState(false)
+
+  const StyledLink = styled(Typography)`
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+      color: #1976d2;
+    }
+  `
 
   const handleSearchInput = (e) => {
     setSearchInputValue(e.target.value)
@@ -31,9 +45,6 @@ const SingleList = () => {
     }
   }
 
-  const dispatch = useDispatch()
-  const [open, setOpen] = useState(false)
-
   const handleOpen = () => {
     setOpen(true)
   }
@@ -41,9 +52,9 @@ const SingleList = () => {
     setOpen(false)
   }
 
-  const { id, name } = listOfTodos
-
-  const { count } = filteredTodos
+  const handleDelete = (todoId, id) => {
+    dispatch(deleteAsyncSingleTodo({ todoId, id }))
+  }
 
   let renderListOfTodos = null
 
@@ -51,66 +62,111 @@ const SingleList = () => {
     const { title, todoId, id, status } = todo
 
     return (
-      <Box key={id}>
-        <Button
-          onClick={() =>
-            dispatch(updateAsyncSingleTodo({ todoId, id, status }))
-          }
-        >
-          <CircleOutlined />
-        </Button>
-        <Link to={`/${todoId}/${id}`}>
-          <Typography className={status ? 'test' : null} variant="subtitle1">
+      <Grid container alignItems="center" justifyContent="center">
+        <Grid item xs={4}>
+          <Button
+            onClick={() =>
+              dispatch(updateAsyncSingleTodo({ todoId, id, status }))
+            }
+          >
+            <CircleOutlined />
+          </Button>
+        </Grid>
+        <Grid item xs={4}>
+          <StyledLink
+            component={Link}
+            to={`/${todoId}/${id}`}
+            className={status ? 'test' : null}
+            variant="h6"
+          >
             {title}
-          </Typography>
-        </Link>
-        <Button onClick={() => dispatch(deleteAsyncSingleTodo({ todoId, id }))}>
-          <DeleteOutline />
-        </Button>
-      </Box>
+          </StyledLink>
+        </Grid>
+        <Grid item xs={4}>
+          <Button onClick={() => handleDelete(todoId, id)}>
+            <DeleteOutline />
+          </Button>
+        </Grid>
+      </Grid>
     )
   })
 
   return (
-    <>
-      <Container maxWidth="sm">
-        <Box sx={{ bgcolor: '#cfe8fc', height: '80vh' }}>
-          <Typography variant="h6">{name} </Typography>
-          <Typography variant="h6">{count} task remaining</Typography>
-          <Button onClick={() => dispatch(deleteAsyncListTodo(id))}>
-            Delete {name}
-          </Button>
-          <TextField
-            id="standard-search"
-            label="Search in Todos"
-            type="search"
-            variant="standard"
-            name={name}
-            onChange={(e) => handleSearchInput(e)}
-          />
-          {renderListOfTodos}
-          <Button onClick={handleOpen}>Create ToDo</Button>
-          <ModalCreateTask open={open} handleClose={handleClose} id={id} />
-          <Button onClick={() => dispatch(filterByStatusSingleTodo({ id }))}>
-            All
-          </Button>
-          <Button
-            onClick={() =>
-              dispatch(filterByStatusSingleTodo({ id, status: false }))
-            }
-          >
-            Active
-          </Button>
-          <Button
-            onClick={() =>
-              dispatch(filterByStatusSingleTodo({ id, status: true }))
-            }
-          >
-            Done
-          </Button>
-        </Box>
-      </Container>
-    </>
+    <Grid container>
+      <Grid item xs={12}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Grid container>
+              <Grid item xs={4}>
+                <Typography variant="h6">{name} </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="h6">{count} task remaining</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  onClick={() => dispatch(deleteAsyncListTodo(id))}
+                  color="error"
+                >
+                  Delete {name}
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              sx={{
+                margin: 'normal',
+              }}
+              id="standard-search"
+              label="Search in Todos"
+              type="search"
+              variant="standard"
+              name={name}
+              onChange={(e) => handleSearchInput(e)}
+              fullWidth="true"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        {renderListOfTodos}
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container>
+          <Grid item xs={4}>
+            <Button onClick={() => dispatch(filterByStatusSingleTodo({ id }))}>
+              All
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              onClick={() =>
+                dispatch(filterByStatusSingleTodo({ id, status: false }))
+              }
+            >
+              Active
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              onClick={() =>
+                dispatch(filterByStatusSingleTodo({ id, status: true }))
+              }
+            >
+              Done
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Button variant="contained" onClick={handleOpen}>
+          Create ToDo
+        </Button>
+      </Grid>
+      <ModalCreateTask open={open} handleClose={handleClose} id={id} />
+    </Grid>
   )
 }
 
