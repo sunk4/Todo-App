@@ -6,6 +6,7 @@ import {
   ListItemText,
   Button,
   Typography,
+  Box,
 } from '@mui/material'
 import { WorkOutlineOutlined } from '@mui/icons-material'
 import { selectAllTodos } from './todosSlice'
@@ -20,9 +21,15 @@ const Sidebar = () => {
 
   const todosList = useSelector(selectAllTodos)
 
+  const [selectedIndex, setSelectedIndex] = useState('')
+  const handleListItemClick = (id) => {
+    setSelectedIndex(id)
+  }
+
   let renderListOfTodos = null
 
   const [open, setOpen] = useState(false)
+
   const handleOpen = () => {
     setOpen(true)
   }
@@ -39,7 +46,9 @@ const Sidebar = () => {
           onClick={() => {
             dispatch(fetchAsyncListOfTodos(id))
             dispatch(filterByStatusSingleTodo({ id }))
+            handleListItemClick(id)
           }}
+          selected={selectedIndex === id}
         >
           <ListItemIcon>
             <WorkOutlineOutlined />
@@ -51,11 +60,27 @@ const Sidebar = () => {
   })
 
   return (
-    <List>
-      <Typography variant="h5">My lists</Typography>
+    <List
+      sx={{
+        '&& .Mui-selected': {
+          color: '#1976d2',
+        },
 
+        '& .MuiListItemButton-root:hover': {
+          color: '#1976d2',
+        },
+      }}
+    >
+      <Typography variant="h6">My lists</Typography>
       {renderListOfTodos}
-      <Button onClick={handleOpen}>Create ToDo List</Button>
+      <Button
+        sx={{ mt: 4 }}
+        variant="contained"
+        type="button"
+        onClick={handleOpen}
+      >
+        Create ToDo List
+      </Button>
       <ModalCreateList open={open} handleClose={handleClose} />
     </List>
   )

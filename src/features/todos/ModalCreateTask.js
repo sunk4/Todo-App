@@ -61,7 +61,7 @@ const ModalCreateList = ({ open, handleClose, id }) => {
       <Box sx={{ ...style }}>
         <Stack spacing={4} justifyContent="center" alignItems="center">
           <Typography variant="h4">Create ToDo</Typography>
-          <FormControl onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <Stack spacing={2}>
               <Input
                 name="title"
@@ -109,7 +109,7 @@ const ModalCreateList = ({ open, handleClose, id }) => {
                 Close
               </Button>
             </Stack>
-          </FormControl>
+          </form>
         </Stack>
       </Box>
     </Modal>

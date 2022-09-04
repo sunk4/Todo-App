@@ -16,12 +16,7 @@ const SharedLayout = () => {
     <>
       <AppBar position="sticky">
         <StyledToolbar>
-          <StyledLink
-            component={Link}
-            to="/"
-            variant="h5"
-            sx={{ display: { xs: 'block', sm: 'block' } }}
-          >
+          <StyledLink component={Link} to="/" variant="h5">
             ToDo App
           </StyledLink>
         </StyledToolbar>

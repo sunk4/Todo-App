@@ -32,7 +32,6 @@ const style = {
 }
 
 const ModalCreateList = ({ open, handleClose }) => {
-  console.log(open)
   const dispatch = useDispatch()
 
   const formik = useFormik({
@@ -55,7 +54,7 @@ const ModalCreateList = ({ open, handleClose }) => {
       <Box sx={{ ...style }}>
         <Stack spacing={4} justifyContent="center" alignItems="center">
           <Typography variant="h4">Create ToDo List</Typography>
-          <FormControl onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <Stack spacing={2}>
               <Input
                 name="name"
@@ -80,7 +79,7 @@ const ModalCreateList = ({ open, handleClose }) => {
                 Close
               </Button>
             </Stack>
-          </FormControl>
+          </form>
         </Stack>
       </Box>
     </Modal>
