@@ -8,12 +8,12 @@ import {
   Typography,
 } from '@mui/material'
 import { WorkOutlineOutlined } from '@mui/icons-material'
-import { selectAllTodos } from '../todosSlice'
+import { selectAllTodos } from './todosSlice'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
-import ModalCreateList from '../ModalCreateList/ModalCreateList'
+import ModalCreateList from './ModalCreateList'
 import { useDispatch } from 'react-redux'
-import { fetchAsyncListOfTodos, filterByStatusSingleTodo } from '../todosSlice'
+import { fetchAsyncListOfTodos, filterByStatusSingleTodo } from './todosSlice'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
@@ -55,7 +55,7 @@ const Sidebar = () => {
       <Typography variant="h5">My lists</Typography>
 
       {renderListOfTodos}
-      <Button onClick={handleOpen}>Create List</Button>
+      <Button onClick={handleOpen}>Create ToDo List</Button>
       <ModalCreateList open={open} handleClose={handleClose} />
     </List>
   )

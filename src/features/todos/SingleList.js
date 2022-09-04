@@ -8,8 +8,8 @@ import {
   selectFilteredTodos,
   deleteAsyncListTodo,
   searchInTodosAsync,
-} from '../todosSlice'
-import ModalCreateTask from '../ModalCreateTask/ModalCreateTask'
+} from './todosSlice'
+import ModalCreateTask from './ModalCreateTask'
 import { useState } from 'react'
 import { DeleteOutline, CircleOutlined } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
@@ -89,7 +89,7 @@ const SingleList = () => {
             onChange={(e) => handleSearchInput(e)}
           />
           {renderListOfTodos}
-          <Button onClick={handleOpen}>Create List</Button>
+          <Button onClick={handleOpen}>Create ToDo</Button>
           <ModalCreateTask open={open} handleClose={handleClose} id={id} />
           <Button onClick={() => dispatch(filterByStatusSingleTodo({ id }))}>
             All

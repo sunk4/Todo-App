@@ -1,7 +1,7 @@
-import Home from './pages/Home/Home'
+import Home from './pages/Home'
 import SharedLayout from './components/SharedLayout'
-import SingleItemInTodo from './pages/SingleItemInTodo/SingleItemInTodo'
-import Error from './pages/Error/Error'
+import SingleItemInTodo from './pages/SingleItemInTodo'
+import Error from './pages/Error'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 const App = () => {
   return (

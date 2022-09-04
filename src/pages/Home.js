@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Unstable_Grid2'
-import Sidebar from '../../features/todos/Sidebar/Sidebar'
-import SingleList from '../../features/todos/SingleList/SingleList'
+import Sidebar from '../features/todos/Sidebar'
+import SingleList from '../features/todos/SingleList'
 
 const Home = () => {
   return (

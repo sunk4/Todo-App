@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import { Input, Button, Modal, Box } from '@mui/material'
 import * as Yup from 'yup'
-import { createAsyncTodoInTodoList } from '../todosSlice'
+import { createAsyncTodoInTodoList } from './todosSlice'
 import { useDispatch } from 'react-redux'
 
 const style = {
@@ -53,7 +53,7 @@ const ModalCreateList = ({ open, handleClose, id }) => {
         aria-describedby="child-modal-description"
       >
         <Box sx={{ ...style, width: 200 }}>
-          <h2 id="child-modal-title">Text in a child modal</h2>
+          <h2 id="child-modal-title">Create ToDo</h2>
           <form onSubmit={formik.handleSubmit}>
             <Input
               name="title"

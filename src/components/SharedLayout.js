@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
 import { AppBar, Typography, Toolbar, styled } from '@mui/material'
 
 const SharedLayout = () => {
@@ -6,16 +6,24 @@ const SharedLayout = () => {
     display: 'flex',
     justifyContent: 'space-between',
   })
+
+  const StyledLink = styled(Typography)`
+    text-decoration: none;
+    color: inherit;
+  `
+
   return (
     <>
       <AppBar position="sticky">
         <StyledToolbar>
-          <Typography
+          <StyledLink
+            component={Link}
+            to="/"
             variant="h5"
             sx={{ display: { xs: 'block', sm: 'block' } }}
           >
             ToDo App
-          </Typography>
+          </StyledLink>
         </StyledToolbar>
       </AppBar>
       <Outlet />

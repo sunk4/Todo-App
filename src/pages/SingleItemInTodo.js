@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux/es/exports'
 import {
   selectSelectedSingleTodo,
   fetchAsyncSingleTodo,
-} from '../../features/todos/todosSlice'
+} from '../features/todos/todosSlice'
 import { Link, useParams } from 'react-router-dom'
 import React from 'react'
 import Moment from 'react-moment'

@@ -1,4 +1,4 @@
-import errorImage from '../../assets/images/error_404.svg'
+import errorImage from '../assets/images/error_404.svg'
 import { Box, Button, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 const Wrapper = () => {
