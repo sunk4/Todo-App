@@ -33,6 +33,11 @@ const SingleList = () => {
     &:hover {
       color: #1976d2;
     }
+    ${({ status }) =>
+      status &&
+      `
+    text-decoration: line-through;
+  `}
   `
 
   const handleSearchInput = (e) => {
@@ -62,7 +67,13 @@ const SingleList = () => {
     const { title, todoId, id, status } = todo
 
     return (
-      <Grid key={id} container alignItems="center" justifyContent="center">
+      <Grid
+        key={id}
+        container
+        alignItems="center"
+        justifyContent="center"
+        marginBottom={2}
+      >
         <Grid item xs={4}>
           <Button
             onClick={() =>
@@ -74,9 +85,9 @@ const SingleList = () => {
         </Grid>
         <Grid item xs={4}>
           <StyledLink
+            status={status ? 1 : 0}
             component={Link}
             to={`/${todoId}/${id}`}
-            className={status ? 'test' : null}
             variant="h6"
           >
             {title}
