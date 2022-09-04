@@ -62,7 +62,7 @@ const SingleList = () => {
     const { title, todoId, id, status } = todo
 
     return (
-      <Grid container alignItems="center" justifyContent="center">
+      <Grid key={id} container alignItems="center" justifyContent="center">
         <Grid item xs={4}>
           <Button
             onClick={() =>
@@ -118,6 +118,7 @@ const SingleList = () => {
             <TextField
               sx={{
                 margin: 'normal',
+                width: '80%',
               }}
               id="standard-search"
               label="Search in Todos"
@@ -125,7 +126,6 @@ const SingleList = () => {
               variant="standard"
               name={name}
               onChange={(e) => handleSearchInput(e)}
-              fullWidth="true"
             />
           </Grid>
         </Grid>
