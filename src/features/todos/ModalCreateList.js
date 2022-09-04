@@ -1,15 +1,7 @@
 import { useFormik } from 'formik'
-import {
-  Input,
-  Button,
-  Modal,
-  Box,
-  Typography,
-  Stack,
-  
-} from '@mui/material'
+import { Input, Button, Modal, Box, Typography, Stack } from '@mui/material'
 import * as Yup from 'yup'
-import { createAsyncTodoList } from './todosSlice'
+import { createAsyncTodoList, fetchAsyncToDos } from './todosSlice'
 import { useDispatch } from 'react-redux'
 
 const style = {
@@ -46,6 +38,7 @@ const ModalCreateList = ({ open, handleClose }) => {
     onSubmit: (values) => {
       dispatch(createAsyncTodoList(values))
       handleClose()
+      dispatch(fetchAsyncToDos())
     },
   })
 
