@@ -10,7 +10,7 @@ const App = () => {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
           <Route path="/:todoId/:id" element={<SingleItemInTodo />} />
-          <Route path="*" element={<Error />} />
+          <Route path="/*" element={<Error />} />
         </Route>
       </Routes>
     </Router>
