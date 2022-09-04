@@ -1,21 +1,34 @@
 import { useFormik } from 'formik'
-import { Input, Button, Modal, Box } from '@mui/material'
 import * as Yup from 'yup'
 import { createAsyncTodoInTodoList } from './todosSlice'
 import { useDispatch } from 'react-redux'
+import {
+  Input,
+  Button,
+  Modal,
+  Box,
+  Typography,
+  Stack,
+  FormControl,
+} from '@mui/material'
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '2px solid #1976d2',
+  borderTop: '12px solid #1976d2',
+  borderRadius: 4,
   boxShadow: 24,
   pt: 2,
   px: 4,
   pb: 3,
+  width: 450,
+  height: 380,
+  maxWidth: { xs: 320, md: 400 },
+  maxHeight: { xs: 400, md: 450 },
 }
 
 const ModalCreateList = ({ open, handleClose, id }) => {
@@ -44,56 +57,62 @@ const ModalCreateList = ({ open, handleClose, id }) => {
   })
 
   return (
-    <>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 200 }}>
-          <h2 id="child-modal-title">Create ToDo</h2>
-          <form onSubmit={formik.handleSubmit}>
-            <Input
-              name="title"
-              type="text"
-              placeholder="Title"
-              value={formik.values.title || ''}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.title && formik.errors.title ? (
-              <p>{formik.errors.title}</p>
-            ) : null}
-            <Input
-              name="description"
-              type="text"
-              placeholder="Description"
-              value={formik.values.description || ''}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.description && formik.errors.description ? (
-              <p>{formik.errors.description}</p>
-            ) : null}
-            <Input
-              name="deadline"
-              type="datetime-local"
-              placeholder="Deadline"
-              value={formik.values.deadline || ''}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.deadline && formik.errors.deadline ? (
-              <p>{formik.errors.deadline}</p>
-            ) : null}
-            <Button type="submit">Submit</Button>
-          </form>
-          <Button onClick={handleClose}>Close Child Modal</Button>
-        </Box>
-      </Modal>
-    </>
+    <Modal open={open} onClose={handleClose}>
+      <Box sx={{ ...style }}>
+        <Stack spacing={4} justifyContent="center" alignItems="center">
+          <Typography variant="h4">Create ToDo</Typography>
+          <FormControl onSubmit={formik.handleSubmit}>
+            <Stack spacing={2}>
+              <Input
+                name="title"
+                type="text"
+                placeholder="Title"
+                value={formik.values.title || ''}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.title && formik.errors.title ? (
+                <p>{formik.errors.title}</p>
+              ) : null}
+              <Input
+                name="description"
+                type="text"
+                placeholder="Description"
+                value={formik.values.description || ''}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.description && formik.errors.description ? (
+                <p>{formik.errors.description}</p>
+              ) : null}
+              <Input
+                name="deadline"
+                type="datetime-local"
+                placeholder="Deadline"
+                value={formik.values.deadline || ''}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.deadline && formik.errors.deadline ? (
+                <p>{formik.errors.deadline}</p>
+              ) : null}
+
+              <Button variant="contained" type="submit">
+                Submit
+              </Button>
+              <Button
+                type="button"
+                variant="contained"
+                color="error"
+                onClick={handleClose}
+              >
+                Close
+              </Button>
+            </Stack>
+          </FormControl>
+        </Stack>
+      </Box>
+    </Modal>
   )
 }
 

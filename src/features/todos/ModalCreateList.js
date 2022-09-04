@@ -25,8 +25,8 @@ const style = {
   pt: 2,
   px: 4,
   pb: 3,
-  width: 400,
-  height: 350,
+  width: 450,
+  height: 380,
   maxWidth: { xs: 320, md: 400 },
   maxHeight: { xs: 400, md: 450 },
 }
@@ -64,7 +64,6 @@ const ModalCreateList = ({ open, handleClose }) => {
                 value={formik.values.name || ''}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                autoFocus
               />
               {formik.touched.name && formik.errors.name ? (
                 <p>{formik.errors.name}</p>
