@@ -8,12 +8,11 @@ import { store } from './app/store'
 import {
   fetchAsyncListOfTodos,
   fetchAsyncToDos,
-  filterByStatusSingleTodo,
 } from './features/todos/todosSlice'
 
 store.dispatch(fetchAsyncToDos())
 store.dispatch(fetchAsyncListOfTodos(1))
-store.dispatch(filterByStatusSingleTodo({ id: 1 }))
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
