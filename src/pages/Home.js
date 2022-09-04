@@ -5,10 +5,10 @@ import SingleList from '../features/todos/SingleList'
 const Home = () => {
   return (
     <Grid padding={4} container spacing={2} mt={2}>
-      <Grid item xs={3}>
+      <Grid item sm={3} xs={12}>
         <Sidebar />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item sm={5} xs={12}>
         <SingleList />
       </Grid>
     </Grid>
