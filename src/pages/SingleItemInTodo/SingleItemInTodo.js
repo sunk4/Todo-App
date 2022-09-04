@@ -18,7 +18,7 @@ const SingleItemInTodo = () => {
     dispatch(fetchAsyncSingleTodo({ todoId, id }))
   }, [dispatch, todoId, id])
 
-  const { deadline, status, text, title } = selectedTodo
+  const { deadline, text, title } = selectedTodo
 
   return (
     <div>

@@ -60,7 +60,7 @@ const SingleList = () => {
           <CircleOutlined />
         </Button>
         <Link to={`/${todoId}/${id}`}>
-          <Typography className="" variant="subtitle1">
+          <Typography className={status ? 'test' : null} variant="subtitle1">
             {title}
           </Typography>
         </Link>
@@ -96,14 +96,14 @@ const SingleList = () => {
           </Button>
           <Button
             onClick={() =>
-              dispatch(filterByStatusSingleTodo({ id, status: true }))
+              dispatch(filterByStatusSingleTodo({ id, status: false }))
             }
           >
             Active
           </Button>
           <Button
             onClick={() =>
-              dispatch(filterByStatusSingleTodo({ id, status: false }))
+              dispatch(filterByStatusSingleTodo({ id, status: true }))
             }
           >
             Done
