@@ -7,6 +7,7 @@ import {
 import { Link, useParams } from 'react-router-dom'
 import React from 'react'
 import Moment from 'react-moment'
+import { Button, Typography, Box, Stack } from '@mui/material'
 
 const SingleItemInTodo = () => {
   const dispatch = useDispatch()
@@ -18,15 +19,22 @@ const SingleItemInTodo = () => {
     dispatch(fetchAsyncSingleTodo({ todoId, id }))
   }, [dispatch, todoId, id])
 
-  const { deadline, text, title } = selectedTodo
+  const { deadline, description, title } = selectedTodo
 
   return (
-    <div>
-      <Link to="/">Back</Link>
-      <div>
-        <Moment fromNow>{deadline}</Moment>
-      </div>
-    </div>
+    <Box sx={{ width: '100%', mt: 6, maxHeight: '60%' }}>
+      <Stack spacing={4} justifyContent="center" alignItems="center">
+        <Typography variant="h2">Title: {title}</Typography>
+        <Typography variant="h4">
+          Deadline: <Moment fromNow>{deadline}</Moment>
+        </Typography>
+        <Typography variant="h5">Description: {description}</Typography>
+
+        <Button component={Link} variant="contained" to="/">
+          Go Back?
+        </Button>
+      </Stack>
+    </Box>
   )
 }
 
