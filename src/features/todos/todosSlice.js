@@ -119,7 +119,11 @@ const initialState = {
 export const todosSlice = createSlice({
   name: 'todos',
   initialState,
-  reducers: {},
+  reducers: {
+    removeSelectedSingleTodo: (state) => {
+      state.selectedSingleTodo = []
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchAsyncToDos.pending, (state, action) => {
@@ -202,8 +206,8 @@ export const todosSlice = createSlice({
   },
 })
 
+export const { removeSelectedSingleTodo } = todosSlice.actions
 export const selectAllTodos = (state) => state.todos.todos
-
 export const selectListOfTodos = (state) => state.todos.listOfTodos
 export const selectSelectedSingleTodo = (state) =>
   state.todos.selectedSingleTodo

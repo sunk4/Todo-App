@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux/es/exports'
 import {
   selectSelectedSingleTodo,
   fetchAsyncSingleTodo,
+  removeSelectedSingleTodo,
 } from '../features/todos/todosSlice'
 import { Link, useParams } from 'react-router-dom'
 import React from 'react'
@@ -18,6 +19,9 @@ const SingleItemInTodo = () => {
 
   useEffect(() => {
     dispatch(fetchAsyncSingleTodo({ todoId, id }))
+    return () => {
+      dispatch(removeSelectedSingleTodo())
+    }
   }, [dispatch, todoId, id])
 
   return (
