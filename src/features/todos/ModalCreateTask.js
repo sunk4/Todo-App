@@ -44,6 +44,9 @@ const ModalCreateList = ({ open, handleClose, id }) => {
     onSubmit: (values) => {
       const { title, description, deadline } = values
       dispatch(createAsyncTodoInTodoList({ title, description, deadline, id }))
+      formik.values.title = ''
+      formik.values.description = ''
+      formik.values.deadline = ''
       handleClose()
     },
   })

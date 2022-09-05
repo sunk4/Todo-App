@@ -34,6 +34,8 @@ const Sidebar = () => {
     setOpen(false)
   }
 
+   
+
   let renderListOfTodos = ''
 
   renderListOfTodos = todosList?.map((todo) => {

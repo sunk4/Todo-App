@@ -147,7 +147,7 @@ export const todosSlice = createSlice({
       .addCase(deleteAsyncSingleTodo.fulfilled, (state, action) => {
         const { id } = action.payload
 
-        const newTodos = state.filteredTodos.items.filter((todo) => {
+        const newTodos = state.filteredTodos?.items?.filter((todo) => {
           return todo.id !== id
         })
         state.filteredTodos = {
@@ -181,6 +181,7 @@ export const todosSlice = createSlice({
         state.isLoading = false
         const newTodos = state.todos.filter((todo) => todo.id !== id)
         state.todos = newTodos
+        state.filteredTodos = []
       })
       .addCase(searchInTodosAsync.fulfilled, (state, action) => {
         state.isLoading = false
@@ -195,7 +196,7 @@ export const todosSlice = createSlice({
 
         state.filteredTodos = {
           count: state.filteredTodos.count + 1,
-          items: [...state.filteredTodos.items, action.payload],
+          items: [...state.filteredTodos?.items, action.payload],
         }
       })
   },

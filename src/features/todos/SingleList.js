@@ -11,7 +11,7 @@ import {
 } from './todosSlice'
 import ModalCreateTask from './ModalCreateTask'
 import { useState } from 'react'
-import { DeleteOutline, CircleOutlined } from '@mui/icons-material'
+import { DeleteOutline, CircleOutlined, Circle } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -32,6 +32,7 @@ const SingleList = () => {
     color: inherit;
     &:hover {
       color: #1976d2;
+      background-color: rgb(245, 245, 245);
     }
     ${({ status }) =>
       status &&
@@ -61,6 +62,20 @@ const SingleList = () => {
     dispatch(deleteAsyncSingleTodo({ todoId, id }))
   }
 
+  const handleDeleteList = (id) => {
+    let answer = window.confirm('Delete?')
+    if (answer) {
+      for (let i = 0; i < filteredTodos.count; i++) {
+        let todoId = filteredTodos.items[i].todoId
+        let id = filteredTodos.items[i].id
+        dispatch(deleteAsyncSingleTodo({ todoId, id }))
+      }
+      setTimeout(() => {
+        dispatch(deleteAsyncListTodo(id))
+      }, 1000)
+    }
+  }
+
   let renderListOfTodos = null
 
   renderListOfTodos = filteredTodos.items?.map((todo) => {
@@ -80,7 +95,7 @@ const SingleList = () => {
               dispatch(updateAsyncSingleTodo({ todoId, id, status }))
             }
           >
-            <CircleOutlined />
+            {status ? <Circle /> : <CircleOutlined />}
           </Button>
         </Grid>
         <Grid item xs={4}>
@@ -102,6 +117,9 @@ const SingleList = () => {
     )
   })
 
+  if (filteredTodos.length === 0) {
+    return <></>
+  }
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -117,7 +135,7 @@ const SingleList = () => {
               <Grid item xs={4}>
                 <Button
                   variant="contained"
-                  onClick={() => dispatch(deleteAsyncListTodo(id))}
+                  onClick={() => handleDeleteList(id)}
                   color="error"
                 >
                   Delete {name}
