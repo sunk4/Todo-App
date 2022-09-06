@@ -76,8 +76,11 @@ export const deleteAsyncListTodo = createAsyncThunk(
 
 export const searchInTodosAsync = createAsyncThunk(
   'todos/searchInTodosAsync',
-  async (text) => {
-    const response = await todosApi.get(`/todo/1/itemInTodo?search=${text}`)
+  async (data) => {
+    const { searchInputValue, id } = data
+    const response = await todosApi.get(
+      `/todo/${id}/itemInTodo?search=${searchInputValue}`
+    )
     return response.data
   }
 )

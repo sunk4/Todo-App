@@ -43,12 +43,9 @@ const SingleList = () => {
 
   const handleSearchInput = (e) => {
     setSearchInputValue(e.target.value)
-
-    if (!searchInputValue) {
-      dispatch(filterByStatusSingleTodo({ id: 1 }))
-    } else {
-      dispatch(searchInTodosAsync(searchInputValue))
-    }
+   
+    dispatch(searchInTodosAsync({id, searchInputValue }))
+    
   }
 
   const handleOpen = () => {
